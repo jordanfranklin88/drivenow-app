@@ -31,7 +31,8 @@ export const Route = createFileRoute("/")({
   component: Index,
 });
 
-type Screen = "home" | "results" | "detail" | "booking" | "success";
+type Screen = "home" | "results" | "detail" | "booking" | "success" | "reservations" | "history" | "profile";
+import { LoginScreen, ReservationsScreen, HistoryScreen, ProfileScreen } from "@/components/ExtraScreens";
 
 interface Vehicle {
   id: number;
@@ -56,6 +57,7 @@ const VEHICLES: Vehicle[] = [
 const CATEGORIES = ["Todos", "Econômico", "Compacto", "SUV", "Sedan", "Pickup"];
 
 function Index() {
+  const [loggedIn, setLoggedIn] = useState(false);
   const [screen, setScreen] = useState<Screen>("home");
   const [category, setCategory] = useState("Todos");
   const [selected, setSelected] = useState<Vehicle | null>(null);
@@ -67,6 +69,8 @@ function Index() {
     setSelected(null);
     setCategory("Todos");
   };
+
+  if (!loggedIn) return <LoginScreen onLogin={() => setLoggedIn(true)} />;
 
   return (
     <div className="mx-auto flex min-h-screen max-w-md flex-col bg-background">
@@ -368,30 +372,37 @@ function Index() {
             </button>
           </div>
         )}
+        {screen === "reservations" && <ReservationsScreen />}
+        {screen === "history" && <HistoryScreen />}
+        {screen === "profile" && <ProfileScreen onLogout={() => { setLoggedIn(false); goHome(); }} />}
       </main>
 
       {/* Bottom nav */}
       <nav className="fixed bottom-0 left-1/2 z-10 w-full max-w-md -translate-x-1/2 border-t bg-card">
         <div className="grid grid-cols-4 px-2 py-2">
           {[
-            { icon: Home, label: "Início", active: true },
-            { icon: Car, label: "Reservas", active: false },
-            { icon: Clock, label: "Histórico", active: false },
-            { icon: User, label: "Perfil", active: false },
-          ].map((item) => (
+            { icon: Home, label: "Início", target: "home" as Screen },
+            { icon: Car, label: "Reservas", target: "reservations" as Screen },
+            { icon: Clock, label: "Histórico", target: "history" as Screen },
+            { icon: User, label: "Perfil", target: "profile" as Screen },
+          ].map((item) => {
+            const active = item.target === "home" ? !["reservations", "history", "profile"].includes(screen) : screen === item.target;
+            return (
             <button
               key={item.label}
-              onClick={item.label === "Início" ? goHome : undefined}
+              onClick={() => (item.target === "home" ? goHome() : setScreen(item.target))}
               className={`flex flex-col items-center gap-1 rounded-xl py-2 text-[10px] font-semibold ${
-                item.active ? "text-primary" : "text-muted-foreground"
+                active ? "text-primary" : "text-muted-foreground"
               }`}
             >
               <item.icon className="h-5 w-5" />
               {item.label}
             </button>
-          ))}
+            );
+          })}
         </div>
       </nav>
+
     </div>
   );
 }
