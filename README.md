@@ -1,4 +1,4 @@
-# 🚗 AlugaFácil — Aplicativo Mobile (React Native + Expo)
+# DriveNow — Aplicativo Mobile (React Native + Expo)
 
 Aplicativo mobile completo de aluguel de veículos desenvolvido em **React Native com Expo**, seguindo uma **arquitetura limpa e didática** focada em facilidade de entendimento 
 
