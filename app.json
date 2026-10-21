@@ -1,0 +1,45 @@
+{
+  "expo": {
+    "name": "DriveNow",
+    "slug": "drivenow-app",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/drivenow_logo.png",
+    "userInterfaceStyle": "light",
+    "splash": {
+      "backgroundColor": "#008248"
+    },
+    "ios": {
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Precisamos de acesso à câmera para vistoria do veículo e leitura da CNH.",
+        "NSLocationWhenInUseUsageDescription": "Precisamos de sua localização para encontrar agências de aluguel próximas."
+      }
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#008248",
+        "foregroundImage": "./assets/android-icon-foreground.png",
+        "backgroundImage": "./assets/android-icon-background.png",
+        "monochromeImage": "./assets/android-icon-monochrome.png"
+      },
+      "permissions": [
+        "CAMERA",
+        "ACCESS_FINE_LOCATION",
+        "ACCESS_COARSE_LOCATION",
+        "ACCESS_NETWORK_STATE"
+      ]
+    },
+    "web": {
+      "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "seu-project-id-aqui"
+      }
+    },
+    "plugins": [
+      "expo-status-bar"
+    ]
+  }
+}
